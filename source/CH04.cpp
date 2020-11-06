@@ -5,6 +5,7 @@
 #include "algorithm"
 
 const string numbers = "0123456789";
+//const string chars = "cminft";
 
 int strLen(string a) {
 	return (sizeof(a.c_str())/sizeof(*a.c_str()));
@@ -43,9 +44,7 @@ int main() {
 	double sum = 0;
 	vector<double> list;
 	while (true) {
-		READ:
 		double num1 = 0;
-		//double num2 = 0;
 		string input = "";
 
 		cout << "Enter a number: ";
@@ -61,34 +60,39 @@ int main() {
 		int length = (sizeof(chr)/sizeof(*chr));
 		for (int i = 0; i < length; i++){
 			if (contains(numbers.c_str(), chr[i])) value += chr[i];
-			else if (chr[i] != ' ' && chr[i] != '\n') unit += chr[i];
+			else if (chr[i] != ' ' && chr[i] != '\n' /*contains(chars.c_str(), chr[i])*/) unit += chr[i];
 		}
 
-		unit = removeLast(unit);
+		//unit = removeLast(unit);
 		double cmValue = 0;
 		double v = atof(value.c_str());
 
 		if (equals(unit, "cm")) {
 			cmValue = v;
-		} else if (equals(unit, "m")) {
+		} else if (equals(unit, "mm")) {
 			cmValue = v * 100;
 		} else if (equals(unit, "in")) {
 			cmValue = v * 2.54f;
 		} else if (equals(unit, "ft")) {
 			cmValue = v * 12 * 2.54f;
 		} else {
-			cout << "Not valid unit type: \"" << unit << "\"" << endl;
+			cout << "Not valid unit type: \"" << unit << "\"" << strLen(unit) << endl;
 			value = "";
 			unit = "";
-			goto READ;
 		}
+		
+		if (equals(unit, "cm") || equals(unit, "mm") || equals(unit, "in") || equals(unit, "ft")) {
+			if (min > cmValue) min = cmValue;
+			if (max < cmValue) max = cmValue;
 
-		cout << "CMValue: " << cmValue << endl;
+			cout << "CMValue: " << cmValue << endl;
 
-		cout << "Value: \"" << value << "\" Unit: \"" << unit << "\"" << endl;
-		list.push_back(cmValue / 100);
-		sum += cmValue / 100;
+			cout << "Value: \"" << value << "\" Unit: \"" << unit[0] << unit[1] << "\"" << endl;
+			list.push_back(cmValue / 100);
+			sum += cmValue / 100;		
+		}
 	}
+	
 	//cout smallest, largest, number of values, sum in meters
 	cout << "Smallest: " << min << endl
 	<< "Largest: " << max << endl
@@ -98,6 +102,7 @@ int main() {
 	for (int i = 0; i < list.size(); i++) {
 		sort(list.begin(), list.end());
 	}
+	cout << "\nElements of list\n";
 	for (int i = 0; i < list.size(); ++i) {
 		cout << list[i] << endl;
 	}

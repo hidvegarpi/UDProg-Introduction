@@ -23,14 +23,15 @@ int main()
 	cout << "Enter the age of the recipant: ";
 	int rec_age = 0;
 	cin >> rec_age;
-	if (rec_age >= 110 || rec_age <= 0) simple_error("you're kidding!!");
+	//cout << rec_age;
+	if (rec_age >= 110 || rec_age <= 0) simple_error("you're kidding!!" + std::to_string(rec_age));
 	full_letter += "I hear you just had a birthday and you are "/* + rec_age + " years old."*/;
-	full_letter += rec_age;
+	full_letter += std::to_string(rec_age);
 	full_letter += " years old. ";
 	
 	if (rec_age < 12){
 		full_letter += "Next year you will be "/* + (rec_age + 1) + "."*/;
-		full_letter += (rec_age + 1);
+		full_letter += std::to_string(rec_age + 1);
 		full_letter += ". ";
 	} else if (rec_age == 17) full_letter += "Next year you will be able to vote. ";
 	else if (rec_age > 70) full_letter += "I hope you are enjoying retirement. ";
